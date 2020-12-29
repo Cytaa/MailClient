@@ -1,15 +1,15 @@
 import json
-import smtplib
 import imaplib
 import email
 
+# json has to contain "mail":"examplEmail@yourMailProvider.smth" and "password":"yourPassword"
 with open("data.json") as jsonFile:
-    jsonObject = json.load(jsonFile)
+    credentials = json.load(jsonFile)
     jsonFile.close()
 
 try:
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
-    mail.login(jsonObject["mail"], jsonObject["password"])
+    mail.login(credentials["mail"], credentials["password"])
     mail.select("inbox")
     data = mail.search(None, "ALL")
     mailIds = data[1]
